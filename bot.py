@@ -29,5 +29,24 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send("BURBGERBEBBE")
 
+@client.command(name="help")
+async def _help(ctx):
+    embed = discord.Embed(title="Help Command",  color=0xDFC39A)
+    ignore = []
+    cogs = [c for c in client.cogs.keys()]
+    for i in ignore:
+        if i in cogs:
+            cogs.remove(i)
+    cogs.sort()
+    lower_cogs = [c.lower() for c in cogs]
+    
+    for cog in cogs:
+        commands_list = client.get_cog(cogs[lower_cogs.index(cog.lower())]).get_commands()
+        commands = ""
+        for command in commands_list:
+            commands += "`{0}`, ".format(command)
+        embed.add_field(name=cog.capitalize(), value=commands[:-2], inline=False)
+        commands = ""
+    await ctx.send(embed=embed)
     
 client.run(TOKEN)
