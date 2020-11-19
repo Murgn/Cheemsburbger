@@ -25,6 +25,11 @@ client.remove_command('help')
 async def on_ready():
     print(f'{client.user.name} is awake! - {client.user.id}')
 
+@client.event
+async def on_command_error(ctx, error):
+    await ctx.send(error)
+    print(error)    
+    
 @client.command()
 async def ping(ctx):
     await ctx.send("BURBGERBEBBE")
